@@ -54,3 +54,16 @@ topology:
     - endpoints: ["sw02:eth3", "pc01:eth2"]
     - endpoints: ["sw03:eth3", "pc02:eth2"]
 ```
+
+С помощью `containerlab graph` была построена следующая схема лабы:
+![Screenshot_4](https://github.com/user-attachments/assets/ece3d7db-5d8d-4e4f-ac75-adec20923c59)
+
+
+С коммутатора 2 (влан2) пингуем роутер по его айпи во влане 2. Все проходит успешно:
+![Screenshot_3](https://github.com/user-attachments/assets/d3428ad0-ab2e-4d81-ab04-5a322c1d1a9a)
+
+С этого же коммутатора попробуем пингануть роутер по айпишнику во влану 1. Пинг не проходит: разные вланы.
+![Screenshot_5](https://github.com/user-attachments/assets/bfe53ed6-df70-4a3f-aee4-c857e318b061)
+
+
+

@@ -12,7 +12,7 @@ Date of finished: 25.09.2024
 
 Для начала работы был написан конфиг формата yaml с описанием нод и их связей:
 
-'''
+```yaml
 name: lab_1
 
 mgmt:
@@ -53,4 +53,4 @@ topology:
 
     - endpoints: ["sw02:eth3", "pc01:eth2"]
     - endpoints: ["sw03:eth3", "pc02:eth2"]
-'''
+```

@@ -12,7 +12,7 @@ Date of finished: 25.09.2024
 
 Для начала работы был написан конфиг формата yaml с описанием нод и их связей:
 
-'''
+```yaml
 name: lab_1
 
 mgmt:
@@ -53,4 +53,29 @@ topology:
 
     - endpoints: ["sw02:eth3", "pc01:eth2"]
     - endpoints: ["sw03:eth3", "pc02:eth2"]
-'''
+```
+
+С помощью `containerlab graph` была построена следующая схема лабы:
+
+![Screenshot_4](https://github.com/user-attachments/assets/ece3d7db-5d8d-4e4f-ac75-adec20923c59)
+
+
+С коммутатора 2 (влан2) пингуем роутер по его айпи во влане 2. Все проходит успешно:
+
+![Screenshot_3](https://github.com/user-attachments/assets/d3428ad0-ab2e-4d81-ab04-5a322c1d1a9a)
+
+С PC02 пингуем роутер по айпишнику во влане 1: пинг не проходит. Во влане 2 пинг успешно проходит.
+
+![image](https://github.com/user-attachments/assets/6325721c-7b24-4cc7-b090-914a2d186fdc)
+
+С PC01 аналогичная ситуация:
+
+![image](https://github.com/user-attachments/assets/83643dea-f357-49ea-b7ca-cd8630dbf877)
+
+С одного ПК на другой пинг так же не идет:
+
+![image](https://github.com/user-attachments/assets/869877d2-04c2-4d37-b50a-02eb29453bda)
+
+
+
+

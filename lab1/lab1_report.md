@@ -62,8 +62,15 @@ topology:
 С коммутатора 2 (влан2) пингуем роутер по его айпи во влане 2. Все проходит успешно:
 ![Screenshot_3](https://github.com/user-attachments/assets/d3428ad0-ab2e-4d81-ab04-5a322c1d1a9a)
 
-С этого же коммутатора попробуем пингануть роутер по айпишнику во влану 1. Пинг не проходит: разные вланы.
-![Screenshot_5](https://github.com/user-attachments/assets/bfe53ed6-df70-4a3f-aee4-c857e318b061)
+С PC02 пингуем роутер по айпишнику во влане 1: пинг не проходит. Во влане 2 пинг успешно проходит.
+![image](https://github.com/user-attachments/assets/6325721c-7b24-4cc7-b090-914a2d186fdc)
+
+С PC01 аналогичная ситуация:
+![image](https://github.com/user-attachments/assets/83643dea-f357-49ea-b7ca-cd8630dbf877)
+
+С одного ПК на другой пинг так же не идет:
+![image](https://github.com/user-attachments/assets/869877d2-04c2-4d37-b50a-02eb29453bda)
+
 
 
 

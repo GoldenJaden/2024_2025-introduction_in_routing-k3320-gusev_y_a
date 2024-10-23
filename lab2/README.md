@@ -4,9 +4,9 @@ Course: [Introduction in routing](https://github.com/itmo-ict-faculty/introducti
 Year: 2024/2025
 Group: K3320
 Author: Gusev Yaroslav Aleksandrovich
-Lab: Lab1
-Date of create: 25.09.2024
-Date of finished: 25.09.2024
+Lab: Lab2
+Date of create: 23.10.2024
+Date of finished: 23.10.2024
 
 # Лабораторная номер 2
 
@@ -94,15 +94,17 @@ topology:
 
 С помощью `containerlab graph` была построена следующая схема лабы:
 
-рисунок 1
+![image](https://github.com/user-attachments/assets/3aa110d4-7a15-4b04-9d7e-bae81493f00a)
 
 ## Проверка работоспособности
 
-С PC01 пингуем PC02 и PC03. Пинг проходит успешно. Также посмотрим traceroute до PC02. Пакет проходит ожидаемый путь (подтверждение этому можно увидеть на рисунке ниже).
+С PC01 пингуем PC02 и PC03. Пинг проходит успешно. Также посмотрим traceroute до PC02.
 
-рисунок 2
+![image](https://github.com/user-attachments/assets/f5ce18e4-1b0e-4736-84e0-c6d315dd1321)
 
-рисунок 3
+Пакет проходит ожидаемый путь (подтверждение этому можно увидеть на рисунке ниже).
+
+![image](https://github.com/user-attachments/assets/9eb04cf6-4c12-4c98-9eed-6fff96d6087e)
 
 ## Дополнительные моменты
 

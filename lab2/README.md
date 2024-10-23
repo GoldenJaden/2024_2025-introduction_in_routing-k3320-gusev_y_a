@@ -1,12 +1,21 @@
 University: [ITMO University](https://itmo.ru/ru/)
+
 Faculty: [FICT](https://fict.itmo.ru)
+
 Course: [Introduction in routing](https://github.com/itmo-ict-faculty/introduction-in-routing)
+
 Year: 2024/2025
+
 Group: K3320
+
 Author: Gusev Yaroslav Aleksandrovich
+
 Lab: Lab2
+
 Date of create: 23.10.2024
+
 Date of finished: 23.10.2024
+
 
 # Лабораторная номер 2
 

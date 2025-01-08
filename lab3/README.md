@@ -12,9 +12,9 @@ Author: Gusev Yaroslav Aleksandrovich
 
 Lab: Lab3
 
-Date of create: 15.11.2024
+Date of create: 13.12.2024
 
-Date of finished: 15.11.2024
+Date of finished: 13.12.2024
 
 
 # Лабораторная номер 3

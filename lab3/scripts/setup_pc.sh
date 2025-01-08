@@ -1,6 +1,1 @@
-apk add dhcpcd traceroute
-dhcpcd eth2
-sleep 10
-ip route del default via 192.168.100.1
-
-ifconfig | grep 192.168.*.50
+ip add add 10.10.0.2/24 dev eth0

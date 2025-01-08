@@ -1,0 +1,74 @@
+name: lab3
+
+mgmt:
+  network: mgmt-net
+  ipv4-subnet: 192.168.100.0/24
+
+topology:
+  kinds: 
+    vr-ros:
+      image: vrnetlab/vr-routeros:6.47.9
+      binds:
+        - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
+      exec:
+        - sh /tmp/wait_ssh.sh
+    linux:
+        image: alpine:3.20.0
+  nodes:
+    R01.NY:
+      kind: vr-ros
+      mgmt-ipv4: 192.168.100.2
+      startup-config: configs/NY
+
+    R01.LND:
+      kind: vr-ros
+      mgmt-ipv4: 192.168.100.3
+      startup-config: configs/LND
+
+    R01.HKI:
+      kind: vr-ros
+      mgmt-ipv4: 192.168.100.4
+      startup-config: configs/HKI
+      
+    R01.SPB:
+      kind: vr-ros
+      mgmt-ipv4: 192.168.100.5
+      startup-config: configs/SPB
+
+    R01.MSK:
+      kind: vr-ros
+      mgmt-ipv4: 192.168.100.6
+      startup-config: configs/MSK
+
+    R01.LBN:
+      kind: vr-ros
+      mgmt-ipv4: 192.168.100.7
+      startup-config: configs/LBN
+
+    PC1:
+      kind: linux
+      mgmt-ipv4: 192.168.100.8
+      binds:
+        - scripts/setup_pc.sh:/tmp/setup_pc.sh
+      exec:
+        - sh /tmp/setup_pc.sh
+
+    SGI-PRISM:
+      kind: linux 
+      mgmt-ipv4: 192.168.100.9
+      binds:
+        - scripts/setup_sgi.sh:/tmp/setup_sgi.sh
+      exec:
+        - sh /tmp/setup_sgi.sh
+
+
+  links:
+    - endpoints: ["R01.NY:eth3", "R01.LND:eth2"]
+    - endpoints: ["R01.NY:eth2", "R01.LBN:eth2"]
+    - endpoints: ["R01.NY:eth4", "SGI-PRISM:eth"]
+    - endpoints: ["R01.LND:eth3", "R01.HKI:eth2"]
+    - endpoints: ["R01.HKI:eth3", "R01.LBN:eth3"]
+    - endpoints: ["R01.HKI:eth4", "R01.SPB:eth2"]
+    - endpoints: ["R01.SPB:eth3", "R01.MSK:eth3"]
+    - endpoints: ["R01.MSK:eth2", "R01.LBN:eth4"]
+    - endpoints: ["R01.SPB:eth4", "PC1:eth"]

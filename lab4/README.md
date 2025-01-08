@@ -44,7 +44,7 @@ R01.SVL
 ![image](https://github.com/user-attachments/assets/5dca5ca7-4742-4a6b-aa1c-c0d1700b67cc)
 
 
-## Проверка работоспособности
+## Часть 2
 
 PC 1
 

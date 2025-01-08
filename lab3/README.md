@@ -19,142 +19,46 @@ Date of finished: 15.11.2024
 
 # Лабораторная номер 3
 
+## Топология
+
+
+![image](https://github.com/user-attachments/assets/f67ba76b-0445-4952-9f78-438fdaa16ff3)
+
 ## Конфигурация
 
-Для начала работы был написан конфиг формата yaml с описанием нод и их связей:
+HKI
+![image](https://github.com/user-attachments/assets/be2ace96-824a-4f33-af4b-b0824ecac3ca)
 
-```yaml
-name: lab2
-mgmt:
-    network: mgmt-net
-    ipv4-subnet: 192.168.100.0/24
-topology:
-    kinds:
-        vr-ros:
-            image: vrnetlab/mikrotik_routeros:6.47.9
-        linux:
-            image: alpine:3.20.0
-    nodes:
-        R01_msk:
-            kind: vr-ros
-            mgmt-ipv4: 192.168.100.2
-            startup-config: configs/R01
-            binds:
-              - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
-            exec:
-              - sh /tmp/wait_ssh.sh
-        R02_brl:
-            kind: vr-ros
-            mgmt-ipv4: 192.168.100.3
-            startup-config: configs/R02
-            binds:
-              - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
-            exec:
-              - sh /tmp/wait_ssh.sh
-        R03_frt:
-            kind: vr-ros
-            mgmt-ipv4: 192.168.100.4
-            startup-config: configs/R03
-            binds:
-              - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
-            exec:
-              - sh /tmp/wait_ssh.sh
-        PC1:
-            kind: linux
-            binds:
-              - scripts/setup_pc.sh:/tmp/setup.sh
-            exec:
-              - sh /tmp/setup.sh
-            stages:
-              create:
-                wait-for:
-                  - node: R01_msk
-                    stage: configure 
-        PC2:
-            kind: linux
-            binds:
-              - scripts/setup_pc.sh:/tmp/setup.sh
-            exec:
-              - sh /tmp/setup.sh
-            stages:
-              create:
-                wait-for:
-                  - node: R02_brl
-                    stage: configure
-        PC3:
-            kind: linux
-            binds:
-              - scripts/setup_pc.sh:/tmp/setup.sh
-            exec:
-              - sh /tmp/setup.sh
-            stages:
-              create:
-                wait-for:
-                  - node: R03_frt
-                    stage: configure
-    links:
-        - endpoints: ["R01_msk:eth2", "R02_brl:eth2"]
-        - endpoints: ["R01_msk:eth3", "R03_frt:eth3"]
-        - endpoints: ["R01_msk:eth4", "PC1:eth2"]
-        - endpoints: ["R02_brl:eth3", "R03_frt:eth2"]
-        - endpoints: ["R02_brl:eth4", "PC2:eth2"]
-        - endpoints: ["R03_frt:eth4", "PC3:eth2"]
-```
+SPB
+![image](https://github.com/user-attachments/assets/102ee415-177f-46ac-bfb0-1e83ad166efb)
 
-С помощью `containerlab graph` была построена следующая схема лабы:
+NY
+![image](https://github.com/user-attachments/assets/533c3f19-ec4e-43d3-b565-8e46c2f74a0c)
 
-![image](https://github.com/user-attachments/assets/3aa110d4-7a15-4b04-9d7e-bae81493f00a)
+MSK
+![image](https://github.com/user-attachments/assets/eb20124c-9777-47e6-8f95-8df43cf7a2a3)
 
-## Проверка работоспособности
+LND
+![image](https://github.com/user-attachments/assets/0c0f527f-fb1b-4835-9d1e-93040aa4254f)
 
-С PC01 пингуем PC02 и PC03. Пинг проходит успешно. Также посмотрим traceroute до PC02.
+LBN
+![image](https://github.com/user-attachments/assets/6aeb6e8a-a0a9-49bc-b886-0be8c1b659c6)
 
-![image](https://github.com/user-attachments/assets/f5ce18e4-1b0e-4736-84e0-c6d315dd1321)
+## Проверка работоспосособности
 
-Пакет проходит ожидаемый путь (подтверждение этому можно увидеть на рисунке ниже).
+SGI -> PC
+![image](https://github.com/user-attachments/assets/4957f375-a435-4f12-ba53-90e00224c7e1)
 
-![image](https://github.com/user-attachments/assets/9eb04cf6-4c12-4c98-9eed-6fff96d6087e)
+PC -> SGI
+![image](https://github.com/user-attachments/assets/46b99cef-fb08-4a88-a477-8df0c8d0ff51)
 
-## Дополнительные моменты
+SPB -> NY
+![image](https://github.com/user-attachments/assets/e7660400-7ed3-465c-b55e-90857fc9e459)
 
-Было добавлено 2 скрипта, первый - для настройки компьютеров:
+NY -> SPB
+![image](https://github.com/user-attachments/assets/8e08707c-39b3-4f7f-8e7e-e7589265bd65)
 
-```bash
-apk add dhcpcd traceroute
-dhcpcd eth2
-sleep 10
-ip route del default via 192.168.100.1
-
-ifconfig | grep 192.168.*.50
-```
-
-Второй - для ожидания поднятия ssh на роутерах:
-
-```bash
-#!/bin/bash
-intIP=172.31.255.30
-
-wait_ssh() {
-    printf "Waiting for ssh: "
-    SSH_UP=0
-    while [ $SSH_UP -eq 0 ]
-    do
-        printf "."
-        SSH_UP=$(wget --timeout=1 --tries=1 $intIP:22 2>&1 | grep -c Read);
-    done
-    printf " SSH UP"
-}
-
-wait_ssh
-```
-
-Так же, с помощью функционала containerlab, ноды PC ожидают поднятия своих роутеров с помощью такой конструкции:
-```yaml
-stages:
-  create:
-    wait-for:
-      - node: R**
-        stage: configure
-```
+SPB -> NY MPLS
+![image](https://github.com/user-attachments/assets/7c5080a5-c807-40e9-9029-1ee0a6ae05cd)
 
 

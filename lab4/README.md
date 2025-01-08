@@ -23,6 +23,8 @@ Date of finished: 09.01.2025
 
 С помощью `containerlab graph` была построена следующая схема сети:
 
+![Безымянный](https://github.com/user-attachments/assets/13704a26-30b5-42ba-997e-1f3309f2cec7)
+
 
 
 ## Часть 1

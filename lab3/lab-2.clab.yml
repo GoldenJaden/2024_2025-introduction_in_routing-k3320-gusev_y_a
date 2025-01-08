@@ -1,0 +1,75 @@
+name: lab2
+mgmt:
+    network: mgmt-net
+    ipv4-subnet: 192.168.100.0/24
+topology:
+    kinds:
+        vr-ros:
+            image: vrnetlab/mikrotik_routeros:6.47.9
+        linux:
+            image: alpine:3.20.0
+    nodes:
+        R01_msk:
+            kind: vr-ros
+            mgmt-ipv4: 192.168.100.2
+            startup-config: configs/R01
+            binds:
+              - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
+            exec:
+              - sh /tmp/wait_ssh.sh
+        R02_brl:
+            kind: vr-ros
+            mgmt-ipv4: 192.168.100.3
+            startup-config: configs/R02
+            binds:
+              - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
+            exec:
+              - sh /tmp/wait_ssh.sh
+        R03_frt:
+            kind: vr-ros
+            mgmt-ipv4: 192.168.100.4
+            startup-config: configs/R03
+            binds:
+              - scripts/wait_ssh.sh:/tmp/wait_ssh.sh
+            exec:
+              - sh /tmp/wait_ssh.sh
+        PC1:
+            kind: linux
+            binds:
+              - scripts/setup_pc.sh:/tmp/setup.sh
+            exec:
+              - sh /tmp/setup.sh
+            stages:
+              create:
+                wait-for:
+                  - node: R01_msk
+                    stage: configure 
+        PC2:
+            kind: linux
+            binds:
+              - scripts/setup_pc.sh:/tmp/setup.sh
+            exec:
+              - sh /tmp/setup.sh
+            stages:
+              create:
+                wait-for:
+                  - node: R02_brl
+                    stage: configure
+        PC3:
+            kind: linux
+            binds:
+              - scripts/setup_pc.sh:/tmp/setup.sh
+            exec:
+              - sh /tmp/setup.sh
+            stages:
+              create:
+                wait-for:
+                  - node: R03_frt
+                    stage: configure
+    links:
+        - endpoints: ["R01_msk:eth2", "R02_brl:eth2"]
+        - endpoints: ["R01_msk:eth3", "R03_frt:eth3"]
+        - endpoints: ["R01_msk:eth4", "PC1:eth2"]
+        - endpoints: ["R02_brl:eth3", "R03_frt:eth2"]
+        - endpoints: ["R02_brl:eth4", "PC2:eth2"]
+        - endpoints: ["R03_frt:eth4", "PC3:eth2"]
